@@ -29,28 +29,29 @@ Vagrant.configure(2) do |config|
 
 
 ###############################################################################
-###################################    manos     ##############################
+###################################    manos40     ##############################
 ###############################################################################
 
-  config.vm.define "manos" do | manos |
-    manos.vm.host_name            ="manos.calavera.biz"
-    manos.vm.network              "private_network", ip: "192.168.33.34"
-    manos.vm.network              "forwarded_port", guest: 22, host: 2234, auto_correct: true
-    manos.vm.network              "forwarded_port", guest: 80, host: 8034
-    manos.vm.network              "forwarded_port", guest: 8080, host: 8134
+  config.vm.define "manos40" do | manos40 |
+    manos40.vm.host_name            ="manos40.calavera.biz"
+    manos40.vm.network              "private_network", ip: "192.168.33.40"
+    manos40.vm.network              "forwarded_port", guest: 22, host: 2240, auto_correct: true
+    manos40.vm.network              "forwarded_port", guest: 80, host: 8040
+    manos40.vm.network              "forwarded_port", guest: 8080, host: 8140
+    
+    manos40.ssh.forward_agent        =true
 
-    manos.vm.synced_folder        ".",         "/home/manos"
-    manos.vm.synced_folder        "./shared", "/mnt/shared"
-    #manos.vm.provision         :shell, path: "./shell/manos.sh"
+    manos40.vm.synced_folder        ".",         "/home/manos40"
+    manos40.vm.synced_folder        "./shared", "/mnt/shared"
+    #manos40.vm.provision         :shell, path: "./shell/manos40.sh"
 
-    manos.vm.provision :chef_zero do |chef|
+    manos40.vm.provision :chef_zero do |chef|
       chef.cookbooks_path         = ["./cookbooks/"]
       chef.add_recipe             "git::default"
       chef.add_recipe             "localAnt::default"
       chef.add_recipe             "java7::default"   # for some reason the Java recipe must be re-run to install Tomcat
       chef.add_recipe             "tomcat::default"
       chef.add_recipe             "shared::_junit"
-      chef.add_recipe             "manos::default"
     end
 
   end
