@@ -43,6 +43,7 @@ Vagrant.configure(2) do |config|
 
     manos40.vm.synced_folder        ".",         "/home/manos40"
     manos40.vm.synced_folder        "./shared", "/mnt/shared"
+    manos40.vm.synced_folder        "/var/SEIS660/public", "/mnt/public"  # course specific
     #manos40.vm.provision         :shell, path: "./shell/manos40.sh"
 
     manos40.vm.provision :chef_zero do |chef|
